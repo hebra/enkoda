@@ -6,6 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // DOM Elements
   const sourceText = document.getElementById("source-text");
   const resultText = document.getElementById("result-text");
+  const sourceLabel = document.querySelector('label[for="source-text"]');
+  const resultLabel = document.querySelector('label[for="result-text"]');
   const formatSelect = document.getElementById("type");
   const directionSelect = document.getElementById("direction");
   const swapBtn = document.getElementById("swap-btn");
@@ -13,6 +15,23 @@ document.addEventListener("DOMContentLoaded", () => {
   const copyBtn = document.getElementById("copy-btn");
   const downloadBtn = document.getElementById("download-btn");
   const errorMessage = document.getElementById("error-message");
+
+  /**
+   * Updates the labels based on current format and direction
+   */
+  const updateLabels = () => {
+    const format = formatSelect.value;
+    const direction = directionSelect.value;
+    const formatName = format === "base64" ? "Base64" : "Base32";
+
+    if (direction === "encode") {
+      sourceLabel.textContent = "Source Text (Plain Text)";
+      resultLabel.textContent = `Result (${formatName})`;
+    } else {
+      sourceLabel.textContent = `Source Text (${formatName})`;
+      resultLabel.textContent = "Result (Plain Text)";
+    }
+  };
 
   /**
    * Performs conversion based on current settings
@@ -59,25 +78,35 @@ document.addEventListener("DOMContentLoaded", () => {
     handleConversion();
   });
 
-  formatSelect.addEventListener("change", handleConversion);
-  directionSelect.addEventListener("change", handleConversion);
+  formatSelect.addEventListener("change", () => {
+    updateLabels();
+    handleConversion();
+  });
+
+  directionSelect.addEventListener("change", () => {
+    updateLabels();
+    handleConversion();
+  });
 
   swapBtn.addEventListener("click", () => {
     const currentResult = resultText.value;
-    if (currentResult) {
-      sourceText.value = currentResult;
-      updateCharCount(currentResult, "input-char-count");
 
-      // Swap direction
-      directionSelect.value = directionSelect.value === "encode"
-        ? "decode"
-        : "encode";
+    // Toggle direction
+    directionSelect.value = directionSelect.value === "encode"
+      ? "decode"
+      : "encode";
 
-      handleConversion();
-      showToast("Input/Output swapped", "success");
-    } else {
-      showToast("Nothing to swap!", "error");
-    }
+    // Update labels to reflect the new direction
+    updateLabels();
+
+    // Swap the text: move result to source
+    sourceText.value = currentResult;
+    updateCharCount(sourceText.value, "input-char-count");
+
+    // Re-run conversion with the new settings
+    handleConversion();
+
+    showToast("Input/Output swapped", "success");
   });
 
   clearBtn.addEventListener("click", () => {
@@ -98,6 +127,9 @@ document.addEventListener("DOMContentLoaded", () => {
       `enkoda-${formatSelect.value}-${directionSelect.value}.txt`;
     downloadText(resultText.value, filename);
   });
+
+  // Initial label update
+  updateLabels();
 
   // Native Base64 with UTF-8 support
   function encodeBase64(str) {

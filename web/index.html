@@ -5,80 +5,120 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="enkoda — Simple and fast Base64 & Base32 encoder and decoder.">
   <title>enkoda — Base64 & Base32 Converter</title>
+  
   <link rel="icon" type="image/png" href="assets/enkoda.png">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="css/variables.css">
   <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Inline script to prevent FOUC -->
+  <script>
+    (function () {
+      const storedTheme = localStorage.getItem("theme");
+      const theme = storedTheme ||
+        (globalThis.matchMedia &&
+            globalThis.matchMedia("(prefers-color-scheme: dark)")
+              .matches
+          ? "dark"
+          : "light");
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
 </head>
 <body>
-  <header>
-    <div class="container">
-      <img src="assets/enkoda.png" alt="enkoda Logo" class="logo">
-      <h1>enkoda</h1>
-      <p>Base64 & Base32 Converter</p>
-    </div>
-  </header>
-
-  <main class="container">
-    <section class="converter">
-      <form id="converter-form">
-        <div class="form-group">
-          <label for="source-text">Source Text</label>
-          <textarea id="source-text" name="source-text" required placeholder="Type or paste text here..."></textarea>
-          <div class="stats">
-            <span id="input-char-count">0 characters</span>
-          </div>
+  <div class="container">
+    <header>
+      <div class="header-top">
+        <div class="header-brand">
+          <img src="assets/enkoda.png" alt="" class="logo">
+          <h1>enkoda — Base64 & Base32 Converter</h1>
         </div>
-
-        <div class="controls">
-          <div class="control-group">
-            <label for="type">Format</label>
-            <select id="type" name="type">
-              <option value="base64">Base64</option>
-              <option value="base32">Base32</option>
-            </select>
-          </div>
-          
-          <div class="control-group">
-            <label for="direction">Action</label>
-            <select id="direction" name="direction">
-              <option value="encode">Encode</option>
-              <option value="decode">Decode</option>
-            </select>
-          </div>
-
-          <div class="control-actions">
-             <button type="button" id="swap-btn" title="Swap Input/Output">Swap</button>
-             <button type="button" id="clear-btn" title="Clear All">Clear</button>
-          </div>
-        </div>
-      </form>
-      
-      <div id="result-container">
-        <div class="form-group">
-          <label for="result-text">Result</label>
-          <textarea id="result-text" readonly placeholder="Results will appear here..."></textarea>
-          <div class="stats">
-            <span id="output-char-count">0 characters</span>
-          </div>
-        </div>
-        <div class="result-actions">
-          <button id="copy-btn">Copy to Clipboard</button>
-          <button id="download-btn">Download as Text</button>
-        </div>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+          <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
       </div>
-    </section>
+      <div class="header-accent"></div>
+    </header>
 
-    <section id="error-message" class="error-message hidden" aria-live="polite"></section>
-  </main>
+    <main>
+      <section class="converter">
+        <form id="converter-form">
+          <div class="form-group">
+            <label for="source-text">Source Text</label>
+            <textarea id="source-text" name="source-text" required placeholder="Type or paste text here..."></textarea>
+            <div class="stats">
+              <span id="input-char-count">0 characters</span>
+            </div>
+          </div>
 
-  <footer>
-    <div class="container">
+          <div class="controls">
+            <div class="control-group">
+              <label for="type">Format</label>
+              <select id="type" name="type">
+                <option value="base64">Base64</option>
+                <option value="base32">Base32</option>
+              </select>
+            </div>
+            
+            <div class="control-group">
+              <label for="direction">Action</label>
+              <select id="direction" name="direction">
+                <option value="encode">Encode</option>
+                <option value="decode">Decode</option>
+              </select>
+            </div>
+
+            <div class="control-actions">
+               <button type="button" id="swap-btn" title="Swap Input/Output">Swap</button>
+               <button type="button" id="clear-btn" title="Clear All">Clear</button>
+            </div>
+          </div>
+        </form>
+        
+        <div id="result-container">
+          <div class="form-group">
+            <label for="result-text">Result</label>
+            <textarea id="result-text" readonly placeholder="Results will appear here..."></textarea>
+            <div class="stats">
+              <span id="output-char-count">0 characters</span>
+            </div>
+          </div>
+          <div class="result-actions">
+            <button id="copy-btn">Copy to Clipboard</button>
+            <button id="download-btn">Download as Text</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="error-message" class="error-message hidden" aria-live="polite"></section>
+    </main>
+
+    <footer>
       <p>&copy; 2026 enkoda. All rights reserved.</p>
-    </div>
-  </footer>
+    </footer>
+  </div>
 
   <div id="toast-container"></div>
 
+  <script src="js/theme.js"></script>
   <script src="js/utils.js"></script>
   <script src="js/converter.js"></script>
 </body>

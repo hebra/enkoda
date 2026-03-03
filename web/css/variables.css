@@ -1,0 +1,29 @@
+:root {
+  --primary-colour: #2563eb;
+  --primary-hover: #1d4ed8;
+  --secondary-colour: #64748b;
+  --secondary-hover: #475569;
+  --background-colour: #f8fafc;
+  --card-background: #ffffff;
+  --text-colour: #1e293b;
+  --text-muted: #64748b;
+  --border-colour: #e2e8f0;
+  --error-colour: #ef4444;
+  --success-colour: #22c55e;
+
+  --border-radius: 8px;
+  --spacing-unit: 1rem;
+  --container-max-width: 900px;
+  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-colour: #0f172a;
+    --card-background: #1e293b;
+    --text-colour: #f8fafc;
+    --text-muted: #94a3b8;
+    --border-colour: #334155;
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+  }
+}

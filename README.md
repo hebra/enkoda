@@ -2,6 +2,9 @@
 
 A simple, fast, and accessible static website for encoding and decoding text using Base64 and Base32 formats.
 
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen)](https://enkoda.yogu.one)
+[![Licence: GPL v3](https://img.shields.io/badge/Licence-GPLv3-blue.svg)](LICENSE)
+
 ## Features
 
 - **Base64 Conversion:** Encode and decode text with full UTF-8 support
@@ -78,7 +81,7 @@ enkoda/
 │   └── assets/
 │       └── enkoda.png      # Project logo
 ├── AGENTS.md               # AI Agent development guidelines
-├── LICENSE                 # GNU GPL v3 License
+├── LICENSE                 # GNU GPL v3 Licence
 ├── Makefile                # Common development tasks
 ├── README.md               # This file
 └── serve.ts                # Deno development server
@@ -102,6 +105,6 @@ enkoda/
 - Sufficient colour contrast (WCAG AA minimum)
 - Print-friendly styles
 
-## License
+## Licence
 
-GNU GPL v3
+This project is licensed under the **GNU General Public License v3 (GPL-3.0)**. See the [LICENSE](LICENSE) file for details.

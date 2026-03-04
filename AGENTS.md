@@ -25,7 +25,7 @@ enkoda/
 │   │   └── utils.js        # Shared helpers (Toasts, Copy, etc.)
 │   └── assets/             # Images and branding
 ├── AGENTS.md               # Instruction manual for AI agents
-├── LICENSE                 # GNU GPL v3 License
+├── LICENSE                 # GNU GPL v3 Licence
 ├── Makefile                # Automation (e.g., make serve)
 ├── README.md               # Project documentation
 └── serve.ts                # Deno-based dev server
@@ -79,7 +79,7 @@ enkoda/
 - **Features**: Integrated dynamic labeling for source/result text based on conversion state.
 - **UI**: Added Swap, Clear, and Download buttons; added character counts.
 - **Organization**: Refined project structure and clarified script loading order.
-- **Legal**: Corrected license reference from MIT to GNU GPL v3.
+- **Legal**: Corrected licence reference from MIT to GNU GPL v3.
 
 ### v1.0 (2026-03-03)
 - Initial guidelines for pure HTML/CSS/JS stack.

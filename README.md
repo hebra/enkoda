@@ -78,7 +78,7 @@ enkoda/
 │   └── assets/
 │       └── enkoda.png      # Project logo
 ├── AGENTS.md               # AI Agent development guidelines
-├── LICENSE                 # MIT License
+├── LICENSE                 # GNU GPL v3 License
 ├── Makefile                # Common development tasks
 ├── README.md               # This file
 └── serve.ts                # Deno development server
@@ -104,4 +104,4 @@ enkoda/
 
 ## License
 
-MIT
+GNU GPL v3

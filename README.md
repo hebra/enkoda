@@ -24,19 +24,22 @@ A simple, fast, and accessible static website for encoding and decoding text usi
 
 ## Local Development
 
-You can serve the project locally using the provided Deno script.
+You can serve the project locally using Deno or simply by opening the `web/index.html` file in your browser. Using Deno is recommended for the best development experience.
 
 ### Prerequisites
 
-- [Deno](https://deno.land/) (optional, for local server and formatting)
+- **Deno**: Required for the local development server and formatting tools.
+- **Make**: (Optional) For using the automated tasks in the `Makefile`.
 
 ### Running the Server
+
+Using the `Makefile` (requires Deno):
 
 ```bash
 make serve
 ```
 
-Alternatively:
+Alternatively, run the Deno script directly:
 
 ```bash
 deno run --allow-net --allow-read serve.ts
@@ -64,6 +67,53 @@ make lint
 - **Vanilla JavaScript (ES6+)** - No frameworks, native DOM manipulation
 - **Deno** - Local development server and tooling
 - **Inter Font** - Modern, readable typeface
+
+## Architecture
+
+The project follows a **Modular Vanilla Web** pattern, using native browser features without any build step.
+
+### Component Diagram
+
+```mermaid
+graph TD
+    A[index.html] --> B(styles.css)
+    A --> C(variables.css)
+    A --> D(theme.js)
+    A --> E(utils.js)
+    A --> F(converter.js)
+    
+    subgraph "Core Logic"
+    F --> |Encoding/Decoding| G[Base64/Base32]
+    F --> |UI Events| H[Form/Buttons]
+    end
+    
+    subgraph "Helpers"
+    E --> I[showToast]
+    E --> J[copyToClipboard]
+    E --> K[downloadText]
+    end
+    
+    subgraph "Theme management"
+    D --> L[LocalStorage]
+    D --> M[Data-Theme Attribute]
+    end
+```
+
+### Conversion Workflow
+
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant I as index.html
+    participant C as converter.js
+    participant H as Encoding/Decoding Logic
+    
+    U->>I: Input text & Select format/direction
+    I->>C: Input/Change event
+    C->>H: Perform Encode/Decode
+    H-->>C: Return result
+    C->>I: Update result textarea & character counts
+```
 
 ## Project Structure
 
@@ -104,6 +154,19 @@ enkoda/
 - Screen reader friendly
 - Sufficient colour contrast (WCAG AA minimum)
 - Print-friendly styles
+
+## Project History
+
+This project's development started with a focus on a pure vanilla tech stack and accessibility. Key milestones in its evolution include:
+
+- **v1.1 (2026-03-04):**
+  - Enhanced UI with Swap, Clear, and Download buttons.
+  - Improved theme management with `theme.js` to prevent FOUC.
+  - Added dynamic labeling and character counts for better UX.
+  - Standardised documentation and corrected licensing (GPL v3).
+- **v1.0 (2026-03-03):**
+  - Initial implementation with core Base64/Base32 conversion logic.
+  - Established accessibility and performance targets.
 
 ## Licence
 

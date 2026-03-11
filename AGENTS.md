@@ -7,40 +7,42 @@ enkoda is a lightweight, static web utility for encoding and decoding text in Ba
 - **Core**: HTML5 (Semantic), CSS3 (Grid/Flexbox/Custom Properties), Vanilla JavaScript (ES6+).
 - **Prohibited**: React, Vue, Tailwind, Bootstrap, TypeScript, Build tools (Webpack/Vite), HTMX.
 - **Infrastructure**: Deno (for `serve.ts`), Makefile for task automation.
+- **Documentation**: Markdown with Mermaid (v11+) for architectural diagrams.
 
 ## Core Architecture
-The project follows a **Modular Vanilla Web** pattern, avoiding any build step.
+The project follows a **Modular Vanilla Web** pattern, avoiding any build step. It relies on native browser features for encoding/decoding and theme management.
 
 ### Folder Structure
 ```
 enkoda/
 ├── web/
-│   ├── index.html          # Main UI and entry point
+│   ├── index.html          # Main application entry point (UI and structure)
 │   ├── css/
 │   │   ├── styles.css      # Component and layout styles
-│   │   └── variables.css   # Design system & CSS variables
+│   │   └── variables.css   # Design system & CSS variables (theming)
 │   ├── js/
-│   │   ├── converter.js    # Core conversion & UI logic
-│   │   ├── theme.js        # Theme management (Dark/Light)
-│   │   └── utils.js        # Shared helpers (Toasts, Copy, etc.)
-│   └── assets/             # Images and branding
+│   │   ├── converter.js    # Core conversion & UI logic (Base64/Base32)
+│   │   ├── theme.js        # Theme management (Dark/Light persistence)
+│   │   └── utils.js        # Shared helpers (Toasts, Copy, Download)
+│   └── assets/             # Images and branding (e.g., enkoda.png)
 ├── AGENTS.md               # Instruction manual for AI agents
 ├── LICENSE                 # GNU GPL v3 Licence
-├── Makefile                # Automation (e.g., make serve)
-├── README.md               # Project documentation
-└── serve.ts                # Deno-based dev server
+├── Makefile                # Automation (e.g., make serve, make lint)
+├── README.md               # Project documentation (with Mermaid diagrams)
+└── serve.ts                # Deno-based development server
 ```
 
 ### Module Responsibilities
-- **`converter.js`**: Pure conversion functions + event listeners for the form. Synchronizes dynamic labels (e.g., "Source Text (Plain Text)") and character counts.
-- **`theme.js`**: Handles theme persistence in `localStorage` and toggling. Prevents Flash of Unstyled Content (FOUC) via inline script in `index.html`.
-- **`utils.js`**: Provides UI-agnostic helpers like `showToast`, `copyToClipboard`, and `updateCharCount`.
+- **`web/js/converter.js`**: Pure conversion functions + event listeners for the form. Synchronizes dynamic labels (e.g., "Source Text (Plain Text)") and character counts. Handles UTF-8 safe Base64 via `encodeURIComponent`/`unescape`.
+- **`web/js/theme.js`**: Handles theme persistence in `localStorage` and toggling. Prevents Flash of Unstyled Content (FOUC) via inline script in `web/index.html`.
+- **`web/js/utils.js`**: Provides UI-agnostic helpers like `showToast`, `copyToClipboard`, `downloadText`, and `updateCharCount`.
 
 ## Coding Standards
 
 ### General Rules
 - **Language**: Use **British English** consistently (`colour`, `centre`, `organisation`).
 - **Naming**: Use camelCase for JS, kebab-case for CSS classes, and semantic IDs for unique elements.
+- **Documentation**: Use Mermaid for any architectural or workflow diagrams in Markdown files.
 
 ### HTML Standards
 - Use semantic tags (`<main>`, `<section>`, `<form>`, `<label>`).
@@ -49,14 +51,16 @@ enkoda/
 
 ### CSS Standards
 - **Mobile-First**: Always define mobile styles first, then use `@media` for larger screens.
-- **Theming**: Use CSS Custom Properties defined in `variables.css`.
+- **Theming**: Use CSS Custom Properties defined in `web/css/variables.css`.
+- **Syntax**: Use modern CSS features like the slash notation for transparency (e.g., `rgb(0 0 0 / 0.1)`).
 - **Specificity**: Avoid `!important`. Use BEM or simple semantic classes.
 
 ### JavaScript Standards
-- **No Dependencies**: Do not add external libraries.
+- **No Dependencies**: Do not add external libraries. Use native DOM APIs and `fetch` if needed.
 - **Functional Approach**: Prefer pure functions for conversion logic.
-- **DOM Manipulation**: Keep DOM updates separate from calculation logic.
-- **Error Handling**: Use `try...catch` for decodes and show user-friendly errors via `errorMessage` element.
+- **DOM Manipulation**: Keep DOM updates separate from calculation logic where possible.
+- **Error Handling**: Use `try...catch` for decodes and show user-friendly errors via the `errorMessage` element.
+- **Linter**: Respect `deno-lint-ignore` where necessary for global functions shared between modules.
 
 ## Agent Constraints
 
@@ -73,7 +77,29 @@ enkoda/
 - **Support**: Target last 2 versions of Chrome, Firefox, Safari, and Edge.
 - **Speed**: Target < 1.5s First Contentful Paint.
 
+## Mode-Specific Instructions
+
+### [CODE] Mode
+- **Implementation**: When adding new features or fixing bugs, ensure character counts and labels are updated. Use British English for all UI text and comments.
+- **Validation**: Run `make lint` to ensure code quality. Ensure no regressions in UTF-8 support for Base64.
+- **Security**: Never use `innerHTML` for input reflections.
+
+### [ARCHITECT] / [ADVANCED_CHAT] Mode
+- **Analysis**: Refer to the Mermaid diagrams in `README.md` for understanding the data flow and structure.
+- **Design**: Propose changes that respect the "no-dependency" and "no-build" constraints. Focus on native browser capabilities.
+
+### [SETUP] / [RUN_VERIFY] Mode
+- **Execution**: Use `make serve` to start the local development server at `http://localhost:8000`.
+- **Environment**: Ensure Deno is installed for local development tasks like linting and formatting (`make lint`, `make format`).
+
 ## Changelog
+### v1.2 (2026-03-11)
+- **Documentation**: Integrated Mermaid diagram standards and instructions.
+- **Modes**: Added explicit mode-specific instructions for AI agents.
+- **Refinement**: Switched to explicit file paths for all modules and components.
+- **Tech Stack**: Formalised Deno and Makefile tooling in the tech stack.
+- **CSS**: Standardised modern CSS syntax usage (e.g., slash transparency notation).
+
 ### v1.1 (2026-03-04)
 - **Architecture**: Added `theme.js` for theme management.
 - **Features**: Integrated dynamic labeling for source/result text based on conversion state.
@@ -87,4 +113,4 @@ enkoda/
 - Defined accessibility and performance targets.
 
 ---
-**Last Updated**: 2026-03-04
+**Last Updated**: 2026-03-11

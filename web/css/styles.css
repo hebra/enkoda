@@ -59,16 +59,10 @@ header {
 }
 
 header h1 {
-  font-size: 1.5rem;
+  font-size: 1.875rem; /* 3xl */
   font-weight: 800;
   letter-spacing: -0.025em;
   color: var(--primary-colour);
-}
-
-@media (min-width: 768px) {
-  header h1 {
-    font-size: 1.875rem;
-  }
 }
 
 .header-actions {
@@ -94,7 +88,7 @@ header h1 {
 .header-btn:hover,
 .theme-toggle:hover {
   background-color: var(--bg-subtle);
-  color: var(--accent-colour);
+  color: var(--primary-colour);
 }
 
 .theme-toggle .moon-icon {
